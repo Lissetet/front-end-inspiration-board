@@ -35,5 +35,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@iconify/react": "^4.1.1",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
+    "tailwindcss-fluid-type": "^2.0.3"
   }
 }
