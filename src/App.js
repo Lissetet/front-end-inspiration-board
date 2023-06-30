@@ -38,7 +38,7 @@ export default function App() {
 
   }
 
-  useEffect(() => getAllBoards(), [boardsData])
+  useEffect(() => getAllBoards(), [])
 
   return (
     <BrowserRouter>
