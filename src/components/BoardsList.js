@@ -1,24 +1,18 @@
 import React from "react"
+import BoardCard from "./BoardCard"
 
 const BoardsList = ({boards}) => {
   const displayBoardInfo = () => {
-    return boards.map((board,index)=>{
+    return boards.map((board)=>{
       return (
-        <div key={index} id="board-card">
-          <div id="board-card-title" >
-          {board.title}
-          </div>
-          <div>
-          {board.description}
-          </div>
-        </div>
+        <BoardCard key={board.id} board={board}/>
       )
     })
   }
   return (
-    <section>
+    <section  >
       <h1>Select a Board</h1>
-      <div id="boards-container">{displayBoardInfo()}</div>
+      <div className="flex flex-wrap gap-3" >{displayBoardInfo()}</div>
     </section>
   );
 }
