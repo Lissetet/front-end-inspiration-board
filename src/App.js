@@ -7,37 +7,38 @@ import BoardsList from "./components/BoardsList";
 import Board from "./components/Board";
 // import NewBoard from "./components/Board";
 import NewBoard from "./components/NewBoard";
+import NotFound from './components/NotFound';
 import axios from "axios";
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 
 export default function App() {
-  const [boardsData, setBoardsData]=useState([])
+  const [boardsData, setBoardsData] = useState([])
 
   const getAllBoards = () => {
     axios
-    .get(`http://127.0.0.1:5000/boards`)
-    .then((response) => {
-      // console.log(response)
-      const newData = response.data.map((board)=> {
-        return {
-          id: board.id,
-          title: board.title,
-          owner: board.owner,
-          description: board.description,
-          theme: board.theme,
-          date_created: board.date_created,
-          cards:board.cards
-        }
+      .get(`http://127.0.0.1:5000/boards`)
+      .then((response) => {
+        // console.log(response)
+        const newData = response.data.map((board) => {
+          return {
+            id: board.id,
+            title: board.title,
+            owner: board.owner,
+            description: board.description,
+            theme: board.theme,
+            date_created: board.date_created,
+            cards: board.cards
+          }
+        })
+        setBoardsData(newData)
       })
-      setBoardsData(newData)
-    })
-    .catch((error)=>{
-      alert(error)
-    })
+      .catch((error) => {
+        alert(error)
+      })
 
   }
 
-  useEffect(()=> getAllBoards(), [boardsData])
+  useEffect(() => getAllBoards(), [boardsData])
 
   return (
     <BrowserRouter>
@@ -46,11 +47,11 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="team" element={<Team />} />
           <Route path="/boards">
-            <Route index element={<BoardsList boards={boardsData}/>} />
+            <Route index element={<BoardsList boards={boardsData} />} />
             <Route path=":id" element={<Board />} />
             <Route path="new" element={<NewBoard />} />
           </Route>
-          {/* <Route path="*" element={<NotFound />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

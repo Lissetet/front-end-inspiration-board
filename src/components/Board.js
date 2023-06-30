@@ -2,16 +2,21 @@ import { useParams } from "react-router-dom";
 import CardList from "./CardList";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import NotFound from "./NotFound";
 
 const Board = (prop) => {
 	const { id } = useParams();
 	const baseURL = "http://127.0.0.1:5000/boards";
 	const [board, setBoard] = useState({});
+
 	useEffect(() => {
-		axios.get(`${baseURL}/${id}`).then((response) => {
-			setBoard(response.data.board);
-			console.log(response.data.board.cards);
-		});
+		axios
+			.get(`${baseURL}/${id}`)
+			.then((response) => {
+				setBoard(response.data.board);
+				console.log(response.data.board.cards);
+
+			});
 	}, []);
 
 	return (
