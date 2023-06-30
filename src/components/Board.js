@@ -1,27 +1,29 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import CardList from "./CardList";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Board = (prop) => {
-  const { id } = useParams()
-  return (
-    <>
-      <section>
-        Board {id} section
-      </section>
-    </>
-  );
-}
+	const { id } = useParams();
+	const baseURL = "http://127.0.0.1:5000/boards";
+	const [board, setBoard] = useState({});
+	useEffect(() => {
+		axios.get(`${baseURL}/${id}`).then((response) => {
+			setBoard(response.data.board);
+			console.log(response.data.board.cards);
+		});
+	}, []);
 
-export default Board;
-import CardList from "./CardList";
-
-const Board = () => {
 	return (
-		<div>
-            <h1> Board Name</h1>
-            <h2> Board Description</h2>
-			<button>Create a Card</button>
-			<CardList />
-		</div>
+		<>
+			<section>
+				<h1> {board.title}</h1>
+				<h2>{board.description}</h2>
+
+				{/* <input type="text"> Create a Card </input> */}
+				<CardList board_id={id} cards={board.cards} />
+			</section>
+		</>
 	);
 };
 
