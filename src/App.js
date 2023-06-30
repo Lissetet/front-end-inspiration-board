@@ -32,12 +32,12 @@ export default function App() {
       setBoardsData(newData)
     })
     .catch((error)=>{
-      alert(error)
+      console.log(error)
     })
 
   }
 
-  useEffect(()=> getAllBoards(), [boardsData])
+  useEffect(()=> getAllBoards(), [])
 
   return (
     <BrowserRouter>

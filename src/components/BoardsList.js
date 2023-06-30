@@ -4,21 +4,21 @@ const BoardsList = ({boards}) => {
   const displayBoardInfo = () => {
     return boards.map((board,index)=>{
       return (
-        <li key={index}>
-          <div>
-          <b>{board.title}</b> by {board.owner}
+        <div key={index} id="board-card">
+          <div id="board-card-title" >
+          {board.title}
           </div>
           <div>
           {board.description}
           </div>
-        </li>
+        </div>
       )
     })
   }
   return (
     <section>
       <h1>Select a Board</h1>
-      <ul>{displayBoardInfo()}</ul>
+      <div id="boards-container">{displayBoardInfo()}</div>
     </section>
   );
 }
