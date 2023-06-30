@@ -14,8 +14,7 @@ const Home = () => {
   }, [])
 
   const handleLike = (id, unlike=false) => {
-    const likeURL = `${baseURL}/${id}/${unlike ? 'unlike' : 'like'}`
-    axios.patch(likeURL)
+    axios.patch(`${baseURL}/${id}/${unlike ? 'unlike' : 'like'}`)
       .then((response) => {
         const new_cards = cards.map((card) => {
           if (card.id === id) {
@@ -23,19 +22,31 @@ const Home = () => {
           } else {
             return card
           }
-        }
-      )
-      setCards(new_cards)
-    })
+        })
+        setCards(new_cards)
+      })
   }
 
   const handleDelete = (id) => {
-    const deleteURL = `${baseURL}/${id}`
-    axios.delete(deleteURL)
+    axios.delete(`${baseURL}/${id}`)
       .then((response) => {
         const new_cards = cards.filter((card) => card.id !== id)
         setCards(new_cards)
       })
+  }
+
+  const handleEdit = (id, msg) => {
+    axios.patch(`${baseURL}/${id}`, {'message': msg})
+    .then((response) => {
+      const new_cards = cards.map((card) => {
+        if (card.id === id) {
+          return response.data.card
+        } else {
+          return card
+        }
+      })
+      setCards(new_cards)
+    })
   }
 
   return (
@@ -49,6 +60,7 @@ const Home = () => {
               key={card.id} 
               handleLike={handleLike}
               handleDelete={handleDelete}
+              handleEdit={handleEdit}
             />
           ))
         }
