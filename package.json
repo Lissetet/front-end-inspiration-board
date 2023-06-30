@@ -9,10 +9,7 @@
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
     "react-icons": "^4.10.1",
-=======
->>>>>>> 39979e9bfec02ccf94aec5046a8d2f27bb69c3cd
     "react-router-dom": "^6.14.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.0"
