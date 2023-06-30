@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useState, useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 const Card = (props) => {
 	const {
@@ -28,6 +29,8 @@ const Card = (props) => {
 	const inputRef = useRef(null);
 
 	useEffect(() => {
+		let len = inputRef.current.value.length;
+		inputRef.current.setSelectionRange(len, len);
 		inputRef.current.focus();
 	}, [textEditable]);
 
@@ -44,8 +47,11 @@ const Card = (props) => {
 					<Icon icon="mdi:pencil" />
 				</button>
 				<button
-					disabled={textEditable}
-					onClick={() => handleEdit(id)}
+					disabled={!textEditable}
+					onClick={() => {
+						handleEdit(id, cardText);
+						setTextEditable(!textEditable);
+					}}
 					className={`text-lg absolute bottom-0 right-0 z-50 ${
 						textEditable ? "" : "hidden"
 					}`}
@@ -61,14 +67,15 @@ const Card = (props) => {
 				<span className="absolute text-xs top-0 w-full font-bold">
 					{formattedDate(date_created)}
 				</span>
-				<span
-					contentEditable={textEditable}
+				<TextareaAutosize
+					minRows={1}
+					maxRows={10}
 					ref={inputRef}
-					onInput={handleChange}
-					className="font-bold mx-auto text-3xl text-center py-16 px-4 self-center"
-				>
-					{cardText}
-				</span>
+					onChange={handleChange}
+					className="font-bold mx-auto text-3xl text-center py-16 px-4 self-center w-full bg-transparent  resize-none"
+					disabled={!textEditable}
+					value={cardText}
+				/>
 				<div className="absolute bottom-0 w-full flex gap-2">
 					<button onClick={() => handleLike(id, true)}>
 						<Icon icon="typcn:minus" className="self-center" />
