@@ -1,51 +1,34 @@
-// import { useState, useEffect } from "react";
-// import axios from 'axios'
-// import Card from "./Card";
+import Card from "./Card";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
-// const BASE_URL = "http://127.0.0.1:5000";
+const CardList = ({ board_id, cards = [] }) => {
+	const [cardList, setCardList] = useState([]);
 
-// const CardList = ({ board_id }) => {
+	const baseURL = "http://127.0.0.1:5000/boards";
+	useEffect(() => {
+		axios.get(`${baseURL}/${board_id}/cards`).then((response) => {
+			// setCardList(response.data.board.cards);
+		});
+	}, []);
 
-//   const [cards, setCards] = useState([])
+	// .catch(() => {
+	// 	console.log("error!");
+	// });
 
-//   useEffect(() => {
-//     const fetchCards = async () => {
-//       const response = await axios.get(`${BASE_URL}/boards/${board_id}/cards`)
-//       const cards = response.data
-//       setCards(cards)
-//     }
-//     fetchCards()
-//   }, [cards])
+	return (
+		<div>
+			{cards.map((card) => (
+				<Card
+					{...card}
+					key={card.id}
+				// handleLike={handleLike}
+				// handleDelete={handleDelete}
+				// handleEdit={handleEdit}
+				/>
+			))}
+		</div>
+	);
+};
 
-//   const handleLike = () => {
-
-//   }
-
-//   const handleDelete = (id) => {
-
-
-
-//   }
-
-//   return (
-//     <section >
-//       <h1>Select a Board</h1>
-//       <div className="flex gap-2">
-//         {cards.map((card) => {
-//           return (
-//             <Card
-//               id={card.id}
-//               message={card.message}
-//               likes_count={card.likes_count}
-//               date_created={card.date_created}
-//               handleLike
-//               handleDelete />
-//           )
-//         })}
-//       </div>
-
-//     </section>
-//   );
-// }
-
-// export default BoardList;
+export default CardList;
