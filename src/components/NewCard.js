@@ -1,43 +1,37 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import InputField from "./InputField";
 import axios from "axios";
 
-export default function NewBoard({boards, setBoards}) {
+const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+const NewCard = ({boardID, cards, setCards}) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [theme, setTheme] = useState('')
-  const [owner, setOwner] = useState('')
-  const baseURL = 'http://127.0.0.1:5000/boards'
-  const navigate = useNavigate();
+  const [message, setMessage] = useState('')
 
   const handleSave = () => {
-    axios.post(`${baseURL}`, {title, description, theme, owner})
+    axios.post(`${baseURL}/boards/${boardID}/cards`, {message})
       .then((response) => {
-        const new_boards = [...boards, response.data.board]
-        setBoards(new_boards)
-        navigate(`/boards/${response.data.board.id}`);
+        const newCard = response.data.card
+        const newCards = [...cards, newCard]
+        setCards(newCards)
       })
-      setIsOpen(false)
+      setMessage('');
+      setIsOpen(false);
   }
 
   const closeModal = () => {
     setIsOpen(false);
-    setTitle('');
-    setDescription('');
-    setTheme('');
-    setOwner('');
+    setMessage('');
   }
 
   return (
     <>
-      <button className="card h-full" type="button" onClick={()=>setIsOpen(true)}>
+      <button className="card" type="button" onClick={()=>setIsOpen(true)}>
         <Icon 
           icon="carbon:add-filled" 
-          className="text-7xl self-center text-center mx-auto my-10 h-full" 
+          className="text-7xl self-center text-center mx-auto my-16" 
         />
       </button>
 
@@ -72,7 +66,7 @@ export default function NewBoard({boards, setBoards}) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Create New Board
+                  Create New Card
                 </Dialog.Title>
                 <Dialog.Description as="p" className="text-sm text-gray-500">
                     Please enter the title, owner, description, and theme of your board.
@@ -80,23 +74,20 @@ export default function NewBoard({boards, setBoards}) {
                 <form 
                   className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSave())}
-                >
-                  <InputField label="title" value={title} setValue={setTitle} />
-                  <InputField label="owner" value={owner} setValue={setOwner} />
-                  <InputField label="description" value={description} setValue={setDescription} />
-                  <InputField label="theme" value={theme} setValue={setTheme} />
+                  >
+                  <InputField label="title" value={message} setValue={setMessage} />
                 </form>
                 <div className="flex mt-4 gap-4 text-white justify-center">
                   <button
                     type="button"
-                    className="btn btn-darker"
+                    className="btn btn-success"
                     onClick={()=>handleSave()}
                   >
-                    Save
+                    Confirm
                   </button>
                   <button
                     type="button"
-                    className="btn btn-outline"
+                    className="btn btn-cancel"
                     onClick={closeModal}
                   >
                     Cancel
@@ -111,3 +102,5 @@ export default function NewBoard({boards, setBoards}) {
     </>
   )
 }
+
+export default NewCard;

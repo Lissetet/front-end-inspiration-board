@@ -1,44 +1,39 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import InputField from "./InputField";
 import axios from "axios";
 
-export default function NewBoard({boards, setBoards}) {
+const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+const EditBoard = ({board, setBoard}) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [theme, setTheme] = useState('')
-  const [owner, setOwner] = useState('')
-  const baseURL = 'http://127.0.0.1:5000/boards'
-  const navigate = useNavigate();
+  const [title, setTitle] = useState(board.title)
+  const [description, setDescription] = useState(board.description)
+  const [theme, setTheme] = useState(board.theme)
+  const [owner, setOwner] = useState(board.owner)
 
   const handleSave = () => {
-    axios.post(`${baseURL}`, {title, description, theme, owner})
+    const body = {title, description, theme, owner}
+    axios.patch(`${baseURL}/boards/${board.id}`, body)
       .then((response) => {
-        const new_boards = [...boards, response.data.board]
-        setBoards(new_boards)
-        navigate(`/boards/${response.data.board.id}`);
+        setBoard(response.data.board)
       })
       setIsOpen(false)
   }
 
   const closeModal = () => {
     setIsOpen(false);
-    setTitle('');
-    setDescription('');
-    setTheme('');
-    setOwner('');
+    setTitle(board.title);
+    setDescription(board.description);
+    setTheme(board.theme);
+    setOwner(board.owner);
   }
 
   return (
     <>
-      <button className="card h-full" type="button" onClick={()=>setIsOpen(true)}>
-        <Icon 
-          icon="carbon:add-filled" 
-          className="text-7xl self-center text-center mx-auto my-10 h-full" 
-        />
+      <button type="button" onClick={()=>setIsOpen(true)}>
+          <Icon icon="mdi:pencil" className="text-xl" />
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -72,10 +67,10 @@ export default function NewBoard({boards, setBoards}) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Create New Board
+                  Edit "{board.title}" Board
                 </Dialog.Title>
                 <Dialog.Description as="p" className="text-sm text-gray-500">
-                    Please enter the title, owner, description, and theme of your board.
+                    Edit the title, description, and theme of your board.
                 </Dialog.Description>
                 <form 
                   className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
@@ -111,3 +106,5 @@ export default function NewBoard({boards, setBoards}) {
     </>
   )
 }
+
+export default EditBoard;

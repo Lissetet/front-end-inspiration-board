@@ -1,0 +1,20 @@
+[
+  { 
+    "key": "boards",
+    "name": "Boards List", 
+    "path": "/boards",
+    "icon": "material-symbols:cards"
+  },
+  { 
+    "key": "cards",
+    "name": "All Cards", 
+    "path": "/cards",
+    "icon": "mdi:cards"
+  },
+  { 
+    "key": "team",
+    "name": "Meet Our Team", 
+    "path": "/team",
+    "icon": "mdi:account-group"
+  }
+]

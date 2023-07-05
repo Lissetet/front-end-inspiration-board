@@ -1,7 +1,58 @@
 h1 {
-    @apply text-3xl font-bold;
+  @apply text-3xl font-bold;
 }
 
 .active {
-    @apply text-primary;
+  @apply text-primary;
+}
+
+.card {
+  @apply bg-primary bg-opacity-30 p-4 rounded-lg w-72 flex shadow-2xl;
+  @apply hover:bg-opacity-50 hover:scale-105 transition-all duration-300;
+}
+
+.btn {
+  @apply rounded-full px-6 py-2 min-w-max cursor-pointer text-center font-bold;
+  @apply hover:scale-105 transition-all duration-300;
+}
+
+.btn-default {
+  @apply bg-primary bg-opacity-60 hover:bg-opacity-80;
+}
+
+.btn-darker {
+  @apply bg-primary bg-opacity-100;
+}
+
+.btn-outline {
+  @apply border-2 border-primary text-primary;
+}
+
+.btn-cancel {
+  @apply border border-gray-300 text-gray-700;
+}
+
+.btn-danger {
+  @apply bg-red-500 text-white;
+}
+
+.btn-success {
+  @apply bg-green-500 text-white;
+}
+
+* {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-white 
+  focus-visible:ring-opacity-75;
+}
+
+.board input {
+  @apply bg-transparent min-w-min;
+}
+  
+#login input {
+  @apply text-gray-900;
+}
+
+.loading {
+  @apply text-9xl mx-auto mt-20;
 }

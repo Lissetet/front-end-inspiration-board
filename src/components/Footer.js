@@ -1,15 +1,9 @@
 import { Icon } from '@iconify/react';
+import teamMembers from '../data/teamMembers';
 
 const Footer = () => {
-  const team = [
-    { name: "La Tasha Pollard", github: "https://github.com/luwammikael", image: 'l_pollard.png'},
-    { name: "Liz Trejo", github: "https://github.com/lissetet", image: 'liz.png'}, 
-    { name: "Lu Sun", github: "https://github.com/lulusde1210", image: 'lu.png'},
-    { name: "Luwam Ghebremicael", github: "https://github.com/LCanCode", image: 'luwam.png'},
-  ];
-
   return (
-    <footer className="bg-black bg-opacity-30 py-4 px-8 mt-20">
+    <footer className="bg-black bg-opacity-30 py-4 px-8 mt-20 bottom-0">
       <section 
         className="flex flex-col lg:flex-row max-w-7xl gap-10 sm:gap-20 mx-auto py-2"
       >
@@ -34,21 +28,21 @@ const Footer = () => {
             <span className="text-xl font-bold">Created By</span>
           </div>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {team.map((member, index) => (
+            {teamMembers.map((member, index) => (
               <li key={index}>
                 <a 
-                  href={member.github} 
+                  href={member.githubUrl} 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-4 hover:underline hover:text-primary"
                 >
                   <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="w-24 aspect-square rounded-full bg-black"
+                    src={member.imgUrl} 
+                    alt={`#${member.first} ${member.last}`} 
+                    className="w-24 aspect-square rounded-full bg-white border-white border-2"
                   />
-                  <span className="hover:underline hover:text-primary font-bold">
-                    {member.name}
+                  <span className="font-bold">
+                    {`${member.first} ${member.last}`}
                   </span>
                 </a>
               </li>
