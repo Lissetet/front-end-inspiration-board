@@ -3,10 +3,11 @@ import { Fragment, useState } from 'react'
 import { Icon } from "@iconify/react";
 import InputField from "./InputField";
 import axios from "axios";
+import PropTypes from 'prop-types';
 
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
-const NewCard = ({boardID, cards, setCards}) => {
+const NewCard = ({cards, setCards, boardID}) => {
   const [isOpen, setIsOpen] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -14,8 +15,7 @@ const NewCard = ({boardID, cards, setCards}) => {
     axios.post(`${baseURL}/boards/${boardID}/cards`, {message})
       .then((response) => {
         const newCard = response.data.card
-        const newCards = [...cards, newCard]
-        setCards(newCards)
+        setCards([...cards, newCard])
       })
       setMessage('');
       setIsOpen(false);
@@ -29,9 +29,9 @@ const NewCard = ({boardID, cards, setCards}) => {
   return (
     <>
       <button className="card" type="button" onClick={()=>setIsOpen(true)}>
-        <Icon 
-          icon="carbon:add-filled" 
-          className="text-7xl self-center text-center mx-auto my-16" 
+        <Icon
+          icon="carbon:add-filled"
+          className="text-7xl self-center text-center mx-auto my-16"
         />
       </button>
 
@@ -71,7 +71,7 @@ const NewCard = ({boardID, cards, setCards}) => {
                 <Dialog.Description as="p" className="text-sm text-gray-500">
                     Please enter the title, owner, description, and theme of your board.
                 </Dialog.Description>
-                <form 
+                <form
                   className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSave())}
                   >
@@ -82,8 +82,9 @@ const NewCard = ({boardID, cards, setCards}) => {
                     type="button"
                     className="btn btn-success"
                     onClick={()=>handleSave()}
+                    disabled={!message}
                   >
-                    Confirm
+                    Save
                   </button>
                   <button
                     type="button"
@@ -102,5 +103,19 @@ const NewCard = ({boardID, cards, setCards}) => {
     </>
   )
 }
+
+NewCard.propTypes = {
+  cards: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      message: PropTypes.string.isRequired,
+      likes_count: PropTypes.number.isRequired,
+      date_created: PropTypes.string.isRequired,
+      board_id: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  setCards: PropTypes.func.isRequired,
+  boardID: PropTypes.number.isRequired,
+};
 
 export default NewCard;

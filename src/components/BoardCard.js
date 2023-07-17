@@ -2,18 +2,13 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import PropTypes from 'prop-types';
 import axios from "axios";
+import DateFormat from "./DateFormat";
 
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 const BoardCard = ({board, boards, setBoards}) => {
-
-	const {id, title, owner, description, date_created} = board;
-	const formattedDate = new Date(date_created).toLocaleDateString("en-US", {
-		month: "short", 
-		day: "numeric", 
-		year: "numeric" 
-	});
-	const plural = board.cards.length === 1 ? "" : "s";
+	const {id, title, owner, description, date_created, cards} = board;
+	const plural = cards === 1 ? "" : "s";
 
 	const deleteBoard = () => {
 		axios
@@ -33,14 +28,12 @@ const BoardCard = ({board, boards, setBoards}) => {
 			<button onClick={deleteBoard} className="absolute top-4 right-4 text-base">
 				<Icon icon="mdi:trash" />
 			</button>
-			<span className="text-xs w-full font-bold mb-4">
-				{formattedDate}
-			</span>
-			<Link to={`/boards/${id}`}>        
+			<DateFormat date={date_created} className="text-xs w-full font-bold mb-4" />
+			<Link to={`/boards/${id}`}>
 				<h3 className="text-lg font-bold pt-8">{title}</h3>
 				<h4 className="text-xs mb-4 -mt-1">by {owner}</h4>
 				<p className="text-sm pb-2">{description}</p>
-				<p className="font-semibold pb-8">{board.cards.length} card{plural}</p>
+				<p className="font-semibold pb-8">{cards} card{plural}</p>
       </Link>
 		</li>
 	);
@@ -54,14 +47,7 @@ BoardCard.propTypes = {
 		owner: PropTypes.string.isRequired,
 		theme : PropTypes.string,
 		date_created: PropTypes.string.isRequired,
-		cards: PropTypes.arrayOf(
-			PropTypes.shape({
-				id: PropTypes.number.isRequired,
-				message: PropTypes.string.isRequired,
-				likes_count: PropTypes.number.isRequired,
-				date_created: PropTypes.string.isRequired,
-			})
-		).isRequired,
+		cards: PropTypes.number.isRequired,
 	}).isRequired,
 	boards: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -71,14 +57,7 @@ BoardCard.propTypes = {
 			owner: PropTypes.string.isRequired,
 			theme : PropTypes.string,
 			date_created: PropTypes.string.isRequired,
-			cards: PropTypes.arrayOf(
-				PropTypes.shape({
-					id: PropTypes.number.isRequired,
-					message: PropTypes.string.isRequired,
-					likes_count: PropTypes.number.isRequired,
-					date_created: PropTypes.string.isRequired,
-				})
-			).isRequired,
+			cards: PropTypes.number.isRequired,
 		})
 	).isRequired,
 	setBoards: PropTypes.func.isRequired,

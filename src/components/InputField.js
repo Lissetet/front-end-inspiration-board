@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
+
 const InputField = ({label, value, setValue}) => {
   return (
     <>
-      <label 
-        htmlFor={label} 
+      <label
+        htmlFor={label}
         className="text-sm text-right font-medium capitalize"
       >
         {label}
@@ -19,5 +21,11 @@ const InputField = ({label, value, setValue}) => {
     </>
   )
 }
+
+InputField.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  setValue: PropTypes.func.isRequired,
+};
 
 export default InputField

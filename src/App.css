@@ -20,14 +20,6 @@ h1 {
   @apply bg-primary bg-opacity-60 hover:bg-opacity-80;
 }
 
-.btn-darker {
-  @apply bg-primary bg-opacity-100;
-}
-
-.btn-outline {
-  @apply border-2 border-primary text-primary;
-}
-
 .btn-cancel {
   @apply border border-gray-300 text-gray-700;
 }
@@ -40,19 +32,14 @@ h1 {
   @apply bg-green-500 text-white;
 }
 
-* {
-  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-white 
-  focus-visible:ring-opacity-75;
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
 }
 
 .board input {
   @apply bg-transparent min-w-min;
 }
-  
+
 #login input {
   @apply text-gray-900;
-}
-
-.loading {
-  @apply text-9xl mx-auto mt-20;
 }

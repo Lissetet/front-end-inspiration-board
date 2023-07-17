@@ -22,17 +22,17 @@
     "first": "La Tasha",
     "last": "Pollard",
     "githubUrl": "https://github.com/LCanCode",
-    "linkedInUrl": "#",
-    "email": "#",
-    "porfolioSite": "#"
+    "linkedInUrl": null,
+    "email": null,
+    "porfolioSite": null
   },
   {
     "imgUrl": "../default-profile.jpeg",
     "first": "Luwam",
     "last": "Ghebremicael",
     "githubUrl": "https://github.com/luwammikael",
-    "linkedInUrl": "#",
-    "email": "#",
-    "porfolioSite": "#"
+    "linkedInUrl": null,
+    "email": null,
+    "porfolioSite": null
   }
 ]

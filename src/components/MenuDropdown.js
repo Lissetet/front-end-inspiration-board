@@ -10,7 +10,7 @@ export default function MenuDropdown() {
     <Menu.Item key={key}>
       {({ active }) => (
         <button
-          
+
           onClick={onclick}
           className={`${
             active ? 'bg-violet-500 text-white font-bold' : 'text-gray-900'
@@ -25,9 +25,9 @@ export default function MenuDropdown() {
 
   return (
     <Menu as="div">
-      <Menu.Button className="w-full">
-        <Icon icon="mdi:user-circle" className="text-xl hidden md:block" />
-        <Icon icon="mdi:menu" className="text-xl md:hidden"/>
+      <Menu.Button className="w-full h-full">
+        <Icon icon="mdi:user-circle" className="text-xl hidden lg:block" />
+        <Icon icon="mdi:menu" className="text-xl lg:hidden"/>
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -38,12 +38,12 @@ export default function MenuDropdown() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items 
-          className="absolute right-3 mt-2 w-56 origin-top-right divide-y 
-            divide-gray-100 md:divide-y-0 rounded-md bg-white shadow-lg 
+        <Menu.Items
+          className="absolute right-3 mt-2 w-56 origin-top-right divide-y
+            divide-gray-100 lg:divide-y-0 rounded-md bg-white shadow-lg
             ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
-          <div className="px-1 py-1 md:hidden">
+          <div className="px-1 py-1 lg:hidden">
             {navigation.map((item) => (
               menuItem(item.key, item.icon, item.name, () => navigate(item.path))
             ))}

@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import InputField from "./InputField";
 import axios from "axios";
+import PropTypes from 'prop-types';
+
+const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 export default function NewBoard({boards, setBoards}) {
   const [isOpen, setIsOpen] = useState(false)
@@ -11,11 +14,10 @@ export default function NewBoard({boards, setBoards}) {
   const [description, setDescription] = useState('')
   const [theme, setTheme] = useState('')
   const [owner, setOwner] = useState('')
-  const baseURL = 'http://127.0.0.1:5000/boards'
   const navigate = useNavigate();
 
   const handleSave = () => {
-    axios.post(`${baseURL}`, {title, description, theme, owner})
+    axios.post(`${baseURL}/boards`, {title, description, theme, owner})
       .then((response) => {
         const new_boards = [...boards, response.data.board]
         setBoards(new_boards)
@@ -35,9 +37,9 @@ export default function NewBoard({boards, setBoards}) {
   return (
     <>
       <button className="card h-full" type="button" onClick={()=>setIsOpen(true)}>
-        <Icon 
-          icon="carbon:add-filled" 
-          className="text-7xl self-center text-center mx-auto my-10 h-full" 
+        <Icon
+          icon="carbon:add-filled"
+          className="text-7xl self-center text-center mx-auto my-10 h-full"
         />
       </button>
 
@@ -77,7 +79,7 @@ export default function NewBoard({boards, setBoards}) {
                 <Dialog.Description as="p" className="text-sm text-gray-500">
                     Please enter the title, owner, description, and theme of your board.
                 </Dialog.Description>
-                <form 
+                <form
                   className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSave())}
                 >
@@ -89,14 +91,15 @@ export default function NewBoard({boards, setBoards}) {
                 <div className="flex mt-4 gap-4 text-white justify-center">
                   <button
                     type="button"
-                    className="btn btn-darker"
+                    className="btn btn-success"
                     onClick={()=>handleSave()}
+                    disabled={!title || !owner || !description}
                   >
                     Save
                   </button>
                   <button
                     type="button"
-                    className="btn btn-outline"
+                    className="btn btn-cancel"
                     onClick={closeModal}
                   >
                     Cancel
@@ -111,3 +114,17 @@ export default function NewBoard({boards, setBoards}) {
     </>
   )
 }
+
+NewBoard.propTypes = {
+  boards: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      owner: PropTypes.string.isRequired,
+      theme : PropTypes.string,
+      date_created: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  setBoards: PropTypes.func.isRequired,
+};

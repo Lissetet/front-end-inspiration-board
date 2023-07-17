@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react'
 import { Icon } from "@iconify/react";
 import InputField from "./InputField";
 import axios from "axios";
+import PropTypes from 'prop-types';
 
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
@@ -72,7 +73,7 @@ const EditBoard = ({board, setBoard}) => {
                 <Dialog.Description as="p" className="text-sm text-gray-500">
                     Edit the title, description, and theme of your board.
                 </Dialog.Description>
-                <form 
+                <form
                   className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSave())}
                 >
@@ -84,14 +85,15 @@ const EditBoard = ({board, setBoard}) => {
                 <div className="flex mt-4 gap-4 text-white justify-center">
                   <button
                     type="button"
-                    className="btn btn-darker"
+                    className="btn btn-success"
                     onClick={()=>handleSave()}
+                    disabled={!title || !description || !owner}
                   >
                     Save
                   </button>
                   <button
                     type="button"
-                    className="btn btn-outline"
+                    className="btn btn-cancel"
                     onClick={closeModal}
                   >
                     Cancel
@@ -106,5 +108,17 @@ const EditBoard = ({board, setBoard}) => {
     </>
   )
 }
+
+EditBoard.propTypes = {
+  board: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    owner: PropTypes.string.isRequired,
+    theme : PropTypes.string,
+    date_created: PropTypes.string.isRequired,
+  }).isRequired,
+  setBoard: PropTypes.func.isRequired,
+};
 
 export default EditBoard;

@@ -1,36 +1,45 @@
 import Card from "./Card";
-import NewCard from "./NewCard";
+import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-const CardList = (props) => {
-	const [cards, setCards] = useState(props.cards);
+const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+const CardList = ({cards, setCards}) => {
+	const [activeCard, setActiveCard] = useState(null);
+	const handleDelete = (id) => {
+    axios.delete(`${baseURL}/cards/${id}`)
+      .then((response) => {
+        const newCards = cards.filter((card) => card.id !== id);
+        setCards(newCards);
+      })
+  }
+
+  const handleUpdate = (id, body) => {
+    axios.patch(`${baseURL}/cards/${id}`, body)
+    .then((response) => {
+      const newCard = response.data.card;
+      const newCards = cards.map(card => card.id === id ? newCard : card);
+      setCards(newCards);
+    })
+  }
+
 	return (
-		<div 
-			id="card_list" 
-			className={`flex flex-wrap justify-center gap-8`}
-		>
-			{cards.map((card) => (
+		<>
+			{cards.map((card) =>
 				<Card
-					{...card}
+					card={card}
 					key={card.id}
-					cards={cards}
-					setCards={setCards}
-				/>
-			))}
-			{props.boardID && (
-				<NewCard
-					boardID={props.boardID}
-					cards={cards}
-					setCards={setCards}
+					handleDelete={handleDelete}
+					handleUpdate={handleUpdate}
+					activeCard={activeCard}
+					setActiveCard={setActiveCard}
 				/>
 			)}
-			
-		</div>
+		</>
 	);
 };
 
-  
 CardList.propTypes = {
 	cards: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -42,7 +51,6 @@ CardList.propTypes = {
 		})
 	).isRequired,
 	setCards: PropTypes.func.isRequired,
-	boardID: PropTypes.number.isRequired,
 };
 
 export default CardList;
