@@ -124,7 +124,7 @@ NewCard.propTypes = {
     })
   ).isRequired,
   setCards: PropTypes.func.isRequired,
-  boardID: PropTypes.number.isRequired,
+  boardID: PropTypes.string.isRequired,
 };
 
 export default NewCard;

@@ -75,7 +75,16 @@ const EditBoard = ({board, setBoard}) => {
                 </Dialog.Description>
                 <form
                   className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
-                  onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSave())}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      closeModal()
+                    } else if (e.key === 'Enter' && title && owner && description) {
+                      e.preventDefault();
+                      handleSave();
+                    } else if (e.key === 'Enter' && (!title || !owner || !description)) {
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   <InputField label="title" value={title} setValue={setTitle} />
                   <InputField label="owner" value={owner} setValue={setOwner} />
