@@ -73,7 +73,16 @@ const NewCard = ({cards, setCards, boardID}) => {
                 </Dialog.Description>
                 <form
                   className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
-                  onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSave())}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      closeModal()
+                    } else if (e.key === 'Enter' && message) {
+                      e.preventDefault();
+                      handleSave();
+                    } else if (e.key === 'Enter' && !message) {
+                      e.preventDefault();
+                    }
+                  }}
                   >
                   <InputField label="title" value={message} setValue={setMessage} />
                 </form>
