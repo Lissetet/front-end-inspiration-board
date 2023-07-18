@@ -2,10 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply m-0 bg-cover text-white;
+#root {
+  @apply flex flex-col min-h-screen m-0 text-white ;
   font-family: 'Inter var', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
   background-image: url('images/page_bg.svg');
+  @apply bg-cover bg-violet-900;
+}
+
+main {
+  @apply max-w-7xl mx-auto pt-28 px-4 w-full flex flex-1 flex-col;
+}
+
+* {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-white
+  focus-visible:ring-opacity-75;
 }

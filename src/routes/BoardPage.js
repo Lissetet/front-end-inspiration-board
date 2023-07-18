@@ -52,8 +52,8 @@ const BoardPage = () => {
           <BoardDetails board={board} handleUpdate={handleUpdate} />
         </article>
         <div className="flex flex-wrap justify-center gap-8">
-          <CardList cards={cards} setCards={setCards} />
-          <NewCard cards={cards} setCards={setCards} boardID={id}/>
+          {/* <CardList cards={cards} setCards={setCards} /> */}
+          {/* <NewCard cards={cards} setCards={setCards} boardID={id}/> */}
         </div>
         <Link
           className="flex btn btn-default self-center items-center mt-14"
