@@ -1,0 +1,38 @@
+[
+  {
+    "imgUrl": "../liz.png",
+    "first": "Liz",
+    "last": "Trejo",
+    "githubUrl": "https://github.com/lissetet",
+    "linkedInUrl": "https://www.linkedin.com/in/liz-trejo/",
+    "email": "liz@liztrejo.dev",
+    "porfolioSite": "https://liztrejo.dev/"
+  },
+  {
+    "imgUrl": "https://media.licdn.com/dms/image/D5603AQEqI7Lo9bI6IA/profile-displayphoto-shrink_800_800/0/1680802403259?e=1693440000&v=beta&t=c4FO4EN4-HTKsmm__36WEmpekRMVGXH35eC8gXGdceQ",
+    "first": "Lu",
+    "last": "Sun",
+    "githubUrl": "https://github.com/lulusde1210",
+    "linkedInUrl": "https://www.linkedin.com/in/lu-sun-a69048170/",
+    "email": "lulusun1210@gmail.com",
+    "porfolioSite": "https://main--lusun.netlify.app/"
+  },
+  {
+    "imgUrl": "../default-profile.jpeg",
+    "first": "La Tasha",
+    "last": "Pollard",
+    "githubUrl": "https://github.com/LCanCode",
+    "linkedInUrl": null,
+    "email": null,
+    "porfolioSite": null
+  },
+  {
+    "imgUrl": "../default-profile.jpeg",
+    "first": "Luwam",
+    "last": "Ghebremicael",
+    "githubUrl": "https://github.com/luwammikael",
+    "linkedInUrl": null,
+    "email": null,
+    "porfolioSite": null
+  }
+]
