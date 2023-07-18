@@ -37,7 +37,7 @@ const BoardPage = () => {
 
   useEffect(() => fetchData, [fetchData]);
 
-  const handleUpdate = (title, description, theme, owner) => {
+  const handleBoardUpdate = (title, description, theme, owner) => {
     const body = {title, description, theme, owner}
     axios.patch(`${baseURL}/boards/${id}`, body)
       .then((response) => {
@@ -45,14 +45,35 @@ const BoardPage = () => {
       })
   }
 
+  const handleCardUpdate = (id, body) => {
+    axios.patch(`${baseURL}/cards/${id}`, body)
+    .then((response) => {
+      const newCard = response.data.card;
+      const newCards = cards.map(card => card.id === id ? newCard : card);
+      setCards(newCards);
+    })
+  }
+
+  const handleCardDelete = (id) => {
+    axios.delete(`${baseURL}/cards/${id}`)
+      .then((response) => {
+        const newCards = cards.filter((card) => card.id !== id);
+        setCards(newCards);
+      })
+  }
+
   const getBoardJsx = () => {
     return (
       <section className="board flex flex-col">
         <article>
-          <BoardDetails board={board} handleUpdate={handleUpdate} />
+          <BoardDetails board={board} handleUpdate={handleBoardUpdate} />
         </article>
         <div className="flex flex-wrap justify-center gap-8">
-          {/* <CardList cards={cards} setCards={setCards} /> */}
+          <CardList
+            cards={cards}
+            handleDelete={handleCardDelete}
+            handleUpdate={handleCardUpdate}
+          />
           {/* <NewCard cards={cards} setCards={setCards} boardID={id}/> */}
         </div>
         <Link
