@@ -1,20 +1,9 @@
 import Card from "./Card";
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useState } from "react";
 
-const CardList = ({ board_id, cards = [] }) => {
-	const [cardList, setCardList] = useState([]);
-
-	const baseURL = "http://127.0.0.1:5000/boards";
-	useEffect(() => {
-		axios.get(`${baseURL}/${board_id}/cards`).then((response) => {
-			// setCardList(response.data.board.cards);
-		});
-	}, []);
-
-	// .catch(() => {
-	// 	console.log("error!");
-	// });
+const CardList = ({ cards, handleDelete, handleUpdate }) => {
+	const [activeCard, setActiveCard] = useState(null);
 
 	return (
 		<div>
@@ -22,13 +11,29 @@ const CardList = ({ board_id, cards = [] }) => {
 				<Card
 					{...card}
 					key={card.id}
-				// handleLike={handleLike}
-				// handleDelete={handleDelete}
-				// handleEdit={handleEdit}
+				handleDelete={handleDelete}
+				handleUpdate={handleUpdate}
+				activeCard={activeCard}
+				setActiveCard={setActiveCard}
 				/>
 			))}
 		</div>
 	);
 };
 
+CardList.propTypes = {
+	cards: PropTypes.arrayOf(
+	PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		message: PropTypes.string.isRequired,
+		likes_count: PropTypes.number.isRequired,
+		date_created: PropTypes.string.isRequired,
+		board_id: PropTypes.number.isRequired,
+	})
+	).isRequired,
+	handleUpdate: PropTypes.func.isRequired,
+	handleDelete: PropTypes.func.isRequired,
+};
+
 export default CardList;
+
