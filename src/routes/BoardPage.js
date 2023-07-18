@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import BoardDetails from "../components/BoardDetails";
 import CardList from "../components/CardList";
-import NewCard from "../components/NewCard";
+// import NewCard from "../components/NewCard";
 import Loading from "../components/Loading";
 import NotFound from '../components/NotFound'
 import ErrorAlert from '../components/ErrorAlert'
@@ -45,23 +45,6 @@ const BoardPage = () => {
       })
   }
 
-  const handleCardUpdate = (id, body) => {
-    axios.patch(`${baseURL}/cards/${id}`, body)
-    .then((response) => {
-      const newCard = response.data.card;
-      const newCards = cards.map(card => card.id === id ? newCard : card);
-      setCards(newCards);
-    })
-  }
-
-  const handleCardDelete = (id) => {
-    axios.delete(`${baseURL}/cards/${id}`)
-      .then((response) => {
-        const newCards = cards.filter((card) => card.id !== id);
-        setCards(newCards);
-      })
-  }
-
   const getBoardJsx = () => {
     return (
       <section className="board flex flex-col">
@@ -71,8 +54,7 @@ const BoardPage = () => {
         <div className="flex flex-wrap justify-center gap-8">
           <CardList
             cards={cards}
-            handleDelete={handleCardDelete}
-            handleUpdate={handleCardUpdate}
+            setCards={setCards}
           />
           {/* <NewCard cards={cards} setCards={setCards} boardID={id}/> */}
         </div>
