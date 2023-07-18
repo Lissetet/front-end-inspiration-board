@@ -37,11 +37,19 @@ const BoardPage = () => {
 
   useEffect(() => fetchData, [fetchData]);
 
+  const handleUpdate = (title, description, theme, owner) => {
+    const body = {title, description, theme, owner}
+    axios.patch(`${baseURL}/boards/${id}`, body)
+      .then((response) => {
+        setBoard(response.data.board)
+      })
+  }
+
   const getBoardJsx = () => {
     return (
       <section className="board flex flex-col">
         <article>
-          <BoardDetails board={board} setBoard={setBoard} />
+          <BoardDetails board={board} handleUpdate={handleUpdate} />
         </article>
         <div className="flex flex-wrap justify-center gap-8">
           <CardList cards={cards} setCards={setCards} />
