@@ -19,8 +19,8 @@ export default function NewBoard({boards, setBoards}) {
   const handleSave = () => {
     axios.post(`${baseURL}/boards`, {title, description, theme, owner})
       .then((response) => {
-        const new_boards = [...boards, response.data.board]
-        setBoards(new_boards)
+        const newBoards = [...boards, response.data.board]
+        setBoards(newBoards)
         navigate(`/boards/${response.data.board.id}`);
       })
       setIsOpen(false)
