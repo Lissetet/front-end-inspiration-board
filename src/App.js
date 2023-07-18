@@ -7,6 +7,7 @@ import BoardsList from "./components/BoardsList";
 import Board from "./components/Board";
 // import NewBoard from "./components/Board";
 import NewBoard from "./components/NewBoard";
+import CreateNewBoardModal from "./components/CreateNewBoardModal";
 import axios from "axios";
 import React, {useState, useEffect} from "react"
 
