@@ -18,20 +18,20 @@
     "porfolioSite": "https://main--lusun.netlify.app/"
   },
   {
-    "imgUrl": "../default-profile.jpeg",
+    "imgUrl": "../latasha.jpg",
     "first": "La Tasha",
     "last": "Pollard",
     "githubUrl": "https://github.com/LCanCode",
-    "linkedInUrl": null,
-    "email": null,
+    "linkedInUrl": "https://www.linkedin.com/in/l-j-pollard-71b836266/",
+    "email": "latashajpollard@gmaill.com",
     "porfolioSite": null
   },
   {
-    "imgUrl": "../default-profile.jpeg",
+    "imgUrl": "../luwam.jpg",
     "first": "Luwam",
     "last": "Ghebremicael",
     "githubUrl": "https://github.com/luwammikael",
-    "linkedInUrl": null,
+    "linkedInUrl": "https://www.linkedin.com/in/luwam-ghebremicael/",
     "email": null,
     "porfolioSite": null
   }
