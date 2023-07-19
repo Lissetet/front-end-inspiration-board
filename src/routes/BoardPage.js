@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import BoardDetails from "../components/BoardDetails";
 import CardList from "../components/CardList";
-// import NewCard from "../components/NewCard";
+import NewCard from "../components/NewCard";
 import Loading from "../components/Loading";
 import NotFound from '../components/NotFound'
 import ErrorAlert from '../components/ErrorAlert'
@@ -56,7 +56,7 @@ const BoardPage = () => {
             cards={cards}
             setCards={setCards}
           />
-          {/* <NewCard cards={cards} setCards={setCards} boardID={id}/> */}
+          <NewCard cards={cards} setCards={setCards} boardID={id}/>
         </div>
         <Link
           className="flex btn btn-default self-center items-center mt-14"
