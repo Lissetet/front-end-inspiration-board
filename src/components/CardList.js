@@ -5,25 +5,25 @@ import axios from "axios";
 
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
-const CardList = ({cards, setCards}) => {
+const CardList = ({ cards, setCards }) => {
 	const [activeCard, setActiveCard] = useState(null);
 
 	const handleUpdate = (id, body) => {
-    axios.patch(`${baseURL}/cards/${id}`, body)
-    .then((response) => {
-      const newCard = response.data.card;
-      const newCards = cards.map(card => card.id === id ? newCard : card);
-      setCards(newCards);
-    })
-  }
+		axios.patch(`${baseURL}/cards/${id}`, body)
+			.then((response) => {
+				const newCard = response.data.card;
+				const newCards = cards.map(card => card.id === id ? newCard : card);
+				setCards(newCards);
+			})
+	}
 
-  const handleDelete = (id) => {
-    axios.delete(`${baseURL}/cards/${id}`)
-      .then((response) => {
-        const newCards = cards.filter((card) => card.id !== id);
-        setCards(newCards);
-      })
-  }
+	const handleDelete = (id) => {
+		axios.delete(`${baseURL}/cards/${id}`)
+			.then((response) => {
+				const newCards = cards.filter((card) => card.id !== id);
+				setCards(newCards);
+			})
+	}
 
 	return (
 		<>
