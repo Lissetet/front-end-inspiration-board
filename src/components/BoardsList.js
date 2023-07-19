@@ -14,23 +14,20 @@ const BoardsList = ({ boards, setBoards }) => {
       })
   }
 
-  const displayBoardInfo = () => {
-    return boards.map((board) => {
-      return (
-        <BoardCard key={board.id} board={board} handleDelete={handleDelete} />
-      )
-    })
-  }
   return (
-    <section  >
-      <h1>Select a Board</h1>
-      <div className="flex flex-wrap gap-3" >
-        {displayBoardInfo()}
-        <NewBoard boards={boards} setBoards={setBoards} />
-      </div>
-
-    </section>
-  );
+    <ul className="flex flex-wrap gap-8 justify-center">
+      {boards.map((board)=> {
+        return <BoardCard
+          board={board}
+          key={board.id}
+          handleDelete={handleDelete}
+        />
+      })}
+      <li>
+        <NewBoard boards={boards} setBoards={setBoards}/>
+      </li>
+    </ul>
+  )
 }
 
 export default BoardsList;

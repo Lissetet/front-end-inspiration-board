@@ -1,34 +1,50 @@
-import React from "react"
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import PropTypes from 'prop-types';
+import DateFormat from "./DateFormat";
 
+const BoardCard = ({board, handleDelete}) => {
+	const {id, title, owner, description, date_created, cards} = board;
+	const plural = cards === 1 ? "" : "s";
 
-const BoardCard = ({ board, handleDelete }) => {
+	return (
+		<li className="card flex-col text-center relative">
+			<button onClick={()=>handleDelete(id)} className="absolute top-4 right-4 text-base">
+				<Icon icon="mdi:trash" />
+			</button>
+			<DateFormat date={date_created} className="text-xs w-full font-bold mb-4" />
+			<Link to={`/boards/${id}`}>
+				<h3 className="text-lg font-bold pt-8">{title}</h3>
+				<h4 className="text-xs mb-4 -mt-1">by {owner}</h4>
+				<p className="text-sm pb-2">{description}</p>
+				<p className="font-semibold pb-8">{cards} card{plural}</p>
+      </Link>
+		</li>
+	);
+};
 
+BoardCard.propTypes = {
+	board: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		title: PropTypes.string.isRequired,
+		description: PropTypes.string.isRequired,
+		owner: PropTypes.string.isRequired,
+		theme : PropTypes.string,
+		date_created: PropTypes.string.isRequired,
+		cards: PropTypes.number.isRequired,
+	}).isRequired,
+	boards: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			owner: PropTypes.string.isRequired,
+			theme : PropTypes.string,
+			date_created: PropTypes.string.isRequired,
+			cards: PropTypes.number.isRequired,
+		})
+	).isRequired,
+	setBoards: PropTypes.func.isRequired,
+};
 
-  const btnClasses = "text-lg absolute z-10 p-4";
-
-  return (
-    <Link to={`/boards/${board.id}`} className="bg-primary bg-opacity-50 p-4 rounded-lg">
-
-      <div className="w-72 flex flex-col relative h-52 text-2xl cursor-pointer" >
-        <div className="font-bold mx-auto  text-center py-16 px-4 self-center w-full bg-transparent  resize-none">
-          {board.title}
-        </div>
-        <div className="text-base">
-          {board.description}
-        </div>
-        <button
-          onClick={() => handleDelete(board.id)}
-          aria-label="Delete Card"
-          className={`${btnClasses} top-0 right-0`}
-        >
-          <Icon icon="mdi:trash" />
-        </button>
-      </div>
-    </Link>
-
-  )
-}
-
-export default BoardCard;  
+export default BoardCard;
