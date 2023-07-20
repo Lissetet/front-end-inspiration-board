@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import MenuDropdown from "./MenuDropdown";
+import MenuDropdown from "./MenuDropDown";
 import navigation from "../data/navigation";
 
 const Header = () => {
