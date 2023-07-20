@@ -33,10 +33,11 @@ const BoardPage = () => {
     });
   }, [id]);
 
-  const handleBoardUpdate = (title, description, theme, owner) => {
-    const body = {title, description, theme, owner}
+  const handleBoardUpdate = (title, description, owner) => {
+    const body = {title, description, owner}
     axios.patch(`${baseURL}/boards/${id}`, body)
       .then((response) => {
+        console.log(response.data)
         setBoard(response.data.board)
       })
   }

@@ -10,7 +10,7 @@ const baseURL = process.env.REACT_APP_BACKEND_URL;
 const SelectBoard = () => {
   const [boards, setBoards]=useState()
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(<Loading title="Loading cards" />);
+  const [loading, setLoading] = useState(<Loading title="Loading boards" />);
 
   useEffect(()=> {
     axios
