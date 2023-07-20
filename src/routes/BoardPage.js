@@ -18,25 +18,16 @@ const BoardPage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(<Loading title="Loading board"/>);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const boardResponse = await axios.get(`${baseURL}/boards/${id}`);
-      setBoard(boardResponse.data.board);
-
-      const cardsResponse = await axios.get(`${baseURL}/boards/${id}/cards`);
-      setCards(cardsResponse.data);
-    }
-    catch (error) {
-      if (error.response.data.error) {
-        setError(<NotFound title={`${error.response.data.error}`} />);
-      } else {
-        setError(<ErrorAlert error={error.message} />);
-      }
-    }
-    setLoading(false);
-  }, [id]);
-
-  useEffect(() => fetchData, [fetchData]);
+  useEffect(() => {
+    axios.get(`${baseURL}/boards/${id}?cards=details`).then((response) => {
+      setBoard(response.data.board);
+			setCards(response.data.board.cards);
+    }).catch((error) => {
+      setError(<ErrorAlert />);
+    }).finally(() => {
+      setLoading(false);
+    });
+  }, []);
 
   const handleBoardUpdate = (title, description, theme, owner) => {
     const body = {title, description, theme, owner}
