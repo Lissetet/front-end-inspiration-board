@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import BoardDetails from "../components/BoardDetails";
 import CardList from "../components/CardList";
@@ -23,11 +23,15 @@ const BoardPage = () => {
       setBoard(response.data.board);
 			setCards(response.data.board.cards);
     }).catch((error) => {
-      setError(<ErrorAlert />);
+      if (error.response.data.error) {
+        setError(<NotFound title={`${error.response.data.error}`} />);
+      } else {
+        setError(<ErrorAlert error={error.message} />);
+      }
     }).finally(() => {
       setLoading(false);
     });
-  }, []);
+  }, [id]);
 
   const handleBoardUpdate = (title, description, theme, owner) => {
     const body = {title, description, theme, owner}
