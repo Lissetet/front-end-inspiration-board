@@ -38,6 +38,11 @@ const Card = ({card, handleDelete, handleUpdate, activeCard, setActiveCard}) => 
     }
   }
 
+  const onEditClick = () => {
+    setActiveCard(id);
+    setEditable(true);
+  }
+
 	useEffect(() => {
     if (editable && activeCard === id) setFocus();
     if (activeCard !== id) handleCancel();
@@ -79,12 +84,7 @@ const Card = ({card, handleDelete, handleUpdate, activeCard, setActiveCard}) => 
         </button>
       </div>
       <button
-        onClick={
-          () => {
-            setActiveCard(id);
-            setEditable(true);
-          }
-        }
+        onClick={onEditClick}
         disabled={editable}
         aria-label="Edit Text"
         className={`${btnClasses} bottom-0 right-0 ${editable ? "hidden" : ""}`}

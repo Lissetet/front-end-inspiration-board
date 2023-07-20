@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import NotFound from '../components/NotFound'
 import ErrorAlert from '../components/ErrorAlert'
 
+
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 const BoardPage = () => {
@@ -45,6 +46,15 @@ const BoardPage = () => {
       })
   }
 
+  const handleCardCreate = (body) => {
+		axios
+			.post(`${baseURL}/boards/${id}/cards`, body)
+			.then((response) => {
+				const newCard = response.data.card;
+				setCards([...cards, newCard]);
+			});
+	};
+
   const getBoardJsx = () => {
     return (
       <section className="board flex flex-col">
@@ -56,7 +66,7 @@ const BoardPage = () => {
             cards={cards}
             setCards={setCards}
           />
-          <NewCard cards={cards} setCards={setCards} boardID={id}/>
+          <NewCard handleCreate={handleCardCreate}/>
         </div>
         <Link
           className="flex btn btn-default self-center items-center mt-14"

@@ -1,23 +1,16 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import InputField from "./InputField";
-import axios from "axios";
 import PropTypes from "prop-types";
+import Modal from "./Modal";
 
-const baseURL = process.env.REACT_APP_BACKEND_URL;
-
-const NewCard = ({ cards, setCards, boardID }) => {
+const NewCard = ({ handleCreate }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [message, setMessage] = useState("");
+	const validInput = message.trim();
 
-	const handleSave = () => {
-		axios
-			.post(`${baseURL}/boards/${boardID}/cards`, { message })
-			.then((response) => {
-				const newCard = response.data.card;
-				setCards([...cards, newCard]);
-			});
+	const onSave = () => {
+		handleCreate({ message });
 		closeModal();
 	};
 
@@ -25,6 +18,49 @@ const NewCard = ({ cards, setCards, boardID }) => {
 		setIsOpen(false);
 		setMessage("");
 	};
+
+	const onKeyDown = (e) => {
+		if (e.key === "Escape") {
+			closeModal();
+		} else if (e.key === "Enter" && validInput) {
+			e.preventDefault();
+			onSave();
+		} else if (e.key === "Enter" && !validInput) {
+			e.preventDefault();
+		}
+	};
+
+	const modalContent = (
+		<>
+			<form
+				className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
+				onKeyDown={onKeyDown}
+			>
+				<InputField
+					label="message"
+					value={message}
+					setValue={setMessage}
+				/>
+			</form>
+			<div className="flex mt-4 gap-4 text-white justify-center">
+				<button
+					type="button"
+					className="btn btn-success"
+					onClick={onSave}
+					disabled={!validInput}
+				>
+					Save
+				</button>
+				<button
+					type="button"
+					className="btn btn-cancel"
+					onClick={closeModal}
+				>
+					Cancel
+				</button>
+			</div>
+		</>
+	);
 
 	return (
 		<>
@@ -40,102 +76,19 @@ const NewCard = ({ cards, setCards, boardID }) => {
 				/>
 			</button>
 
-			<Transition appear show={isOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-50" onClose={closeModal}>
-					<Transition.Child
-						as={Fragment}
-						enter="ease-out duration-300"
-						enterFrom="opacity-0"
-						enterTo="opacity-100"
-						leave="ease-in duration-200"
-						leaveFrom="opacity-100"
-						leaveTo="opacity-0"
-					>
-						<div className="fixed inset-0 bg-black/80" />
-					</Transition.Child>
-
-					<div className="fixed inset-0 overflow-y-auto">
-						<div className="flex min-h-full items-center justify-center p-4 text-center">
-							<Transition.Child
-								as={Fragment}
-								enter="ease-out duration-300"
-								enterFrom="opacity-0 scale-95"
-								enterTo="opacity-100 scale-100"
-								leave="ease-in duration-200"
-								leaveFrom="opacity-100 scale-100"
-								leaveTo="opacity-0 scale-95"
-							>
-								<Dialog.Panel
-									className="w-full max-w-lg rounded-lg bg-white \
-                p-6 text-left align-middle shadow-xl transition-all"
-								>
-									<Dialog.Title
-										as="h3"
-										className="text-lg font-medium leading-6 text-gray-900"
-									>
-										Create New Card
-									</Dialog.Title>
-									<Dialog.Description as="p" className="text-sm text-gray-500">
-										Please enter a message.
-									</Dialog.Description>
-									<form
-										className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
-										onKeyDown={(e) => {
-											if (e.key === "Escape") {
-												closeModal();
-											} else if (e.key === "Enter" && message) {
-												e.preventDefault();
-												handleSave();
-											} else if (e.key === "Enter" && !message.trim()) {
-												e.preventDefault();
-											}
-										}}
-									>
-										<InputField
-											label="message"
-											value={message}
-											setValue={setMessage}
-										/>
-									</form>
-									<div className="flex mt-4 gap-4 text-white justify-center">
-										<button
-											type="button"
-											className="btn btn-success"
-											onClick={() => handleSave()}
-											disabled={!message.trim()}
-										>
-											Save
-										</button>
-										<button
-											type="button"
-											className="btn btn-cancel"
-											onClick={closeModal}
-										>
-											Cancel
-										</button>
-									</div>
-								</Dialog.Panel>
-							</Transition.Child>
-						</div>
-					</div>
-				</Dialog>
-			</Transition>
+			<Modal
+				isOpen={isOpen}
+				closeModal={closeModal}
+				title="Create New Card"
+				description="Please enter a message."
+				content={modalContent}
+			/>
 		</>
 	);
 };
 
 NewCard.propTypes = {
-	cards: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			message: PropTypes.string.isRequired,
-			likes_count: PropTypes.number.isRequired,
-			date_created: PropTypes.string.isRequired,
-			board_id: PropTypes.number.isRequired,
-		})
-	).isRequired,
-	setCards: PropTypes.func.isRequired,
-	boardID: PropTypes.string.isRequired,
+	handleCreate: PropTypes.func.isRequired,
 };
 
 export default NewCard;

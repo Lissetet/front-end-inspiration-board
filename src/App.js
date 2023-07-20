@@ -1,3 +1,4 @@
+import { StrictMode } from "react";
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./routes/Layout";
@@ -10,19 +11,21 @@ import AllCards from "./routes/AllCards";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="team" element={<Team />} />
-          <Route path="/boards" >
-            <Route index element={<SelectBoard />} />
-            <Route path=":id" element={<BoardPage />} />
+    <StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="team" element={<Team />} />
+            <Route path="/boards" >
+              <Route index element={<SelectBoard />} />
+              <Route path=":id" element={<BoardPage />} />
+            </Route>
+            <Route path="/cards" element={<AllCards />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="/cards" element={<AllCards />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </StrictMode>
   );
 }
