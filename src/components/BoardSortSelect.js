@@ -11,9 +11,9 @@ export const sortBoards = (boards, sortKey) => {
     } else if (sortKey === 'ownerZA') {
       return b.owner.localeCompare(a.owner);
     } else if (sortKey === 'mostCards') {
-      return b.cards || 0 - a.cards || 0;
+      return (b.cards || 0) - (a.cards || 0);
     } else if (sortKey === 'leastCards') {
-      return a.cards || 0 - b.cards || 0;
+      return (a.cards || 0) - (b.cards || 0);
     } else if (sortKey === 'newest') {
       return new Date(b.date_created) - new Date(a.date_created);
     } else if (sortKey === 'oldest') {
