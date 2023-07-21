@@ -51,7 +51,7 @@ const Card = ({card, handleDelete, handleUpdate, activeCard, setActiveCard}) => 
   const btnClasses = "text-lg absolute z-10 p-4";
 
 	return (
-		<article className="card relative flex-col">
+		<article className="card relative items-center">
       <DateFormat
         date={date_created}
         className="text-xs absolute top-0 font-bold py-4 w-full pr-8 text-center"
@@ -62,12 +62,12 @@ const Card = ({card, handleDelete, handleUpdate, activeCard, setActiveCard}) => 
         ref={inputRef}
         onChange={(e)=>setCardText(e.target.value)}
         onKeyDown={onKeyDown}
-        className="font-bold mx-auto text-3xl text-center py-14 px-4 self-center
-          w-full bg-transparent resize-none overflow-hidden mt-8"
+        className="font-bold mx-auto text-3xl text-center py-20 px-4 self-center
+          w-full bg-transparent resize-none overflow-hidden items-center"
         disabled={!editable}
         value={cardText}
       />
-      <div className="flex w-full justify-center h-fit">
+      <div className="flex w-full justify-center h-fit absolute bottom-0 my-4">
         <button
           onClick={() => handleUpdate(id, { 'likes_count': likes_count - 1})}
           aria-label = "Unlike"
