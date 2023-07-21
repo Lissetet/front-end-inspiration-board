@@ -23,7 +23,7 @@ export const sortCards = (cards, sortKey) => {
 
 export const SortSelect = ({sortKey, setSortKey}) => {
   return (
-    <div className="flex gap-4 justify-end mb-10 items-center">
+    <div className="flex gap-4 h-fit my-auto items-center">
       <span className="font-bold">Sort By:</span>
       <select 
         onChange={(e)=>setSortKey(e.target.value)}

@@ -45,6 +45,16 @@ const SelectBoard = () => {
       })
   };
 
+  const handleUpdate = (id, body) => {
+    axios.patch(`${baseURL}/boards/${id}`, body)
+      .then((response) => {
+        const newBoard = response.data.board;
+        const newBoards = boards.map(board => board.id === id ? newBoard : board);
+        const sortedBoards = sortKey ? sortBoards(newBoards, sortKey) : null;
+        setBoards(sortedBoards || newBoards);
+      })
+  };
+
   useEffect(() =>  {
     if (sortKey) {
       const sortedBoards = sortBoards(boards, sortKey);
@@ -56,12 +66,16 @@ const SelectBoard = () => {
   const getBoardsListJsx = () => {
     return (
       <section>
-        <div className="flex justify-between h-fit mb-10">
+        <div className="flex justify-between h-fit mb-10 flex-wrap gap-12">
           <h1 className="text-3xl font-bold">Select a Board</h1>
           <SortSelect sortKey={sortKey} setSortKey={setSortKey} />
         </div>
         <ul className="flex flex-wrap gap-8 justify-center">
-          <BoardsList boards={boards} handleDelete={handleDelete} />
+          <BoardsList 
+            boards={boards} 
+            handleDelete={handleDelete}
+            handleUpdate={handleUpdate} 
+          />
           <li>
             <NewBoard boards={boards} handleCreate={handleCreate}/>
           </li>

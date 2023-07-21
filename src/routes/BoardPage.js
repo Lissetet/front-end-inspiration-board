@@ -35,8 +35,7 @@ const BoardPage = () => {
     });
   }, [id]);
 
-  const handleBoardUpdate = (title, description, owner) => {
-    const body = {title, description, owner}
+  const handleBoardUpdate = (id, body) => {
     axios.patch(`${baseURL}/boards/${id}`, body)
       .then((response) => {
         console.log(response.data)
@@ -66,7 +65,7 @@ const BoardPage = () => {
   const getBoardJsx = () => {
     return (
       <section className="board flex flex-col">
-        <article className="flex justify-between">
+        <article className="flex justify-between flex-wrap gap-12 mb-8">
           <div>
             <BoardDetails board={board} handleUpdate={handleBoardUpdate} />
           </div>

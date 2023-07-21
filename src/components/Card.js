@@ -51,10 +51,10 @@ const Card = ({card, handleDelete, handleUpdate, activeCard, setActiveCard}) => 
   const btnClasses = "text-lg absolute z-10 p-4";
 
 	return (
-		<article className="card relative">
+		<article className="card relative flex-col">
       <DateFormat
         date={date_created}
-        className="absolute text-xs top-0 w-full font-bold py-4 px-2"
+        className="text-xs absolute top-0 font-bold py-4 w-full pr-8 text-center"
       />
       <TextareaAutosize
         minRows={1}
@@ -62,32 +62,34 @@ const Card = ({card, handleDelete, handleUpdate, activeCard, setActiveCard}) => 
         ref={inputRef}
         onChange={(e)=>setCardText(e.target.value)}
         onKeyDown={onKeyDown}
-        className="font-bold mx-auto text-3xl text-center py-16 px-4 self-center
-          w-full bg-transparent resize-none overflow-hidden"
+        className="font-bold mx-auto text-3xl text-center py-14 px-4 self-center
+          w-full bg-transparent resize-none overflow-hidden mt-8"
         disabled={!editable}
         value={cardText}
       />
-      <div className="absolute bottom-0 w-full flex gap-2 py-4 px-2">
+      <div className="flex w-full justify-center h-fit">
         <button
           onClick={() => handleUpdate(id, { 'likes_count': likes_count - 1})}
           aria-label = "Unlike"
+          className="mr-8"
         >
-          <Icon icon="typcn:minus" />
+          <Icon icon="mdi:thumb-down" />
         </button>
-        <span className="font-bold">{likes_count}</span>
+        <span className="font-bold mr-2">{likes_count}</span>
         <Icon icon="mdi:heart" className="text-lg text-red-600" />
         <button
           onClick={() => handleUpdate(id, { 'likes_count': likes_count + 1})}
           aria-label = "Like"
+          className="ml-8"
         >
-          <Icon icon="typcn:plus" />
+          <Icon icon="mdi:thumb-up" />
         </button>
       </div>
       <button
         onClick={onEditClick}
         disabled={editable}
         aria-label="Edit Text"
-        className={`${btnClasses} bottom-0 right-0 ${editable ? "hidden" : ""}`}
+        className={`${btnClasses} top-0 left-0 ${editable ? "hidden" : ""}`}
       >
         <Icon icon="mdi:pencil" />
       </button>
@@ -95,7 +97,7 @@ const Card = ({card, handleDelete, handleUpdate, activeCard, setActiveCard}) => 
         onClick={updateMessage}
         disabled={!editable}
         aria-label="Save Updated Text"
-        className={`${btnClasses} bottom-0 right-0 ${editable ? "" : "hidden"}`}
+        className={`${btnClasses} top-0 left-0 ${editable ? "" : "hidden"}`}
       >
         <Icon icon="mdi:check" />
       </button>

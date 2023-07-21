@@ -38,9 +38,24 @@ const NewBoard = ({ handleCreate }) => {
           }
         }}
       >
-        <InputField label="title" value={title} setValue={setTitle} />
-        <InputField label="owner" value={owner} setValue={setOwner} />
-        <InputField label="description" value={description} setValue={setDescription} />
+        <InputField 
+          label="title" 
+          value={title} 
+          setValue={setTitle} 
+          maxLength={20} 
+        />
+        <InputField 
+          label="owner" 
+          value={owner} 
+          setValue={setOwner} 
+          maxLength={20} 
+        />
+        <InputField 
+          label="description" 
+          value={description} 
+          setValue={setDescription} 
+          maxLength={80} 
+        />
       </form>
       <div className="flex mt-4 gap-4 text-white justify-center">
         <button

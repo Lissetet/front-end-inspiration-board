@@ -8,13 +8,13 @@ const BoardDetails = ({board, handleUpdate}) => {
 	return (
 		<>
 			<div className='flex items-center gap-2'>
-				<EditBoard board={board} handleUpdate={handleUpdate}/>
+				<EditBoard board={board} handleUpdate={handleUpdate} iconClassName="text-xl"/>
 				<h1> {title} </h1>
 			</div>
 			<p className='text-neutral-200'>
 				by {owner} on <DateFormat date={date_created}/>
 			</p>
-			<h2 className='text-lg mt-2 mb-8'>{description}</h2>
+			<h2 className='text-lg mt-2'>{description}</h2>
 		</>
 	)
 }

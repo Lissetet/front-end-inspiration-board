@@ -40,6 +40,7 @@ const NewCard = ({ handleCreate }) => {
 					label="message"
 					value={message}
 					setValue={setMessage}
+					maxLength={40}
 				/>
 			</form>
 			<div className="flex mt-4 gap-4 text-white justify-center">

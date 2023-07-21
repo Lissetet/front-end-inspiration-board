@@ -4,7 +4,7 @@ import InputField from "./InputField";
 import PropTypes from 'prop-types';
 import Modal from './Modal';
 
-const EditBoard = ({board, handleUpdate}) => {
+const EditBoard = ({board, handleUpdate, iconClassName}) => {
   const [isOpen, setIsOpen] = useState(false)
   const [title, setTitle] = useState(board.title)
   const [owner, setOwner] = useState(board.owner)
@@ -12,7 +12,7 @@ const EditBoard = ({board, handleUpdate}) => {
   const validInput =  title.trim() && title.trim() && title.trim();
 
   const onSave = () => {
-    handleUpdate(title, description, owner)
+    handleUpdate(board.id, {title, description, owner})
     setIsOpen(false)
   }
 
@@ -40,9 +40,24 @@ const EditBoard = ({board, handleUpdate}) => {
         className="my-8 grid grid-cols-[auto,1fr] gap-4 items-center"
         onKeyDown={onKeyDown}
       >
-        <InputField label="title" value={title} setValue={setTitle} />
-        <InputField label="owner" value={owner} setValue={setOwner} />
-        <InputField label="description" value={description} setValue={setDescription} />
+        <InputField 
+          label="title" 
+          value={title} 
+          setValue={setTitle} 
+          maxLength={20} 
+        />
+        <InputField 
+          label="owner" 
+          value={owner} 
+          setValue={setOwner} 
+          maxLength={20} 
+        />
+        <InputField 
+          label="description" 
+          value={description} 
+          setValue={setDescription} 
+          maxLength={80} 
+        />
       </form>
       <div className="flex mt-4 gap-4 text-white justify-center">
         <button
@@ -70,8 +85,9 @@ const EditBoard = ({board, handleUpdate}) => {
         type="button" 
         onClick={()=>setIsOpen(true)}
         aria-label="Edit board"
+        className={iconClassName} 
       >
-        <Icon icon="mdi:pencil" className="text-xl" />
+        <Icon icon="mdi:pencil" />
       </button>
 
       <Modal 
@@ -94,6 +110,7 @@ EditBoard.propTypes = {
     date_created: PropTypes.string.isRequired,
   }).isRequired,
   handleUpdate: PropTypes.func.isRequired,
+  iconClassName: PropTypes.string,
 };
 
 export default EditBoard;

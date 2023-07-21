@@ -34,7 +34,7 @@ const AllCards = () => {
   const getCardsJsx = () => {
     return (
       <section id="card_list" className="flex flex-col gap-8">
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-wrap gap-12">
           <h1 className="text-3xl font-bold">All Cards</h1>
           <SortSelect sortKey={sortKey} setSortKey={setSortKey} />
         </div>
