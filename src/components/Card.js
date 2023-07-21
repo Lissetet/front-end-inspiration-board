@@ -120,7 +120,7 @@ Card.propTypes = {
   }).isRequired,
   handleDelete: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired,
-  activeCard: PropTypes.string,
+  activeCard: PropTypes.number,
   setActiveCard: PropTypes.func.isRequired,
 };
 

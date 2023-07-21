@@ -5,7 +5,7 @@ import axios from "axios";
 
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
-const CardList = ({ cards, setCards }) => {
+const CardList = ({ cards, setCards, sortKey, sortCards }) => {
 	const [activeCard, setActiveCard] = useState(null);
 
 	const handleUpdate = (id, body) => {
@@ -13,7 +13,8 @@ const CardList = ({ cards, setCards }) => {
 			.then((response) => {
 				const newCard = response.data.card;
 				const newCards = cards.map(card => card.id === id ? newCard : card);
-				setCards(newCards);
+				const sortedCards = sortKey ? sortCards(newCards, sortKey) : null;
+        setCards(sortedCards || newCards);
 			})
 	}
 
@@ -21,7 +22,8 @@ const CardList = ({ cards, setCards }) => {
 		axios.delete(`${baseURL}/cards/${id}`)
 			.then((response) => {
 				const newCards = cards.filter((card) => card.id !== id);
-				setCards(newCards);
+				const sortedCards = sortKey ? sortCards(newCards, sortKey) : null;
+        setCards(sortedCards || newCards);
 			})
 	}
 
@@ -52,6 +54,8 @@ CardList.propTypes = {
 		})
 	).isRequired,
 	setCards: PropTypes.func.isRequired,
+	sortKey: PropTypes.string,
+	sortCards: PropTypes.func.isRequired,
 };
 
 export default CardList;

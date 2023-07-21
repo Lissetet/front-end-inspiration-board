@@ -7,6 +7,7 @@ import NewCard from "../components/NewCard";
 import Loading from "../components/Loading";
 import NotFound from '../components/NotFound'
 import ErrorAlert from '../components/ErrorAlert'
+import { SortSelect, sortCards } from "../components/CardSortSelect";
 
 
 const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -17,6 +18,7 @@ const BoardPage = () => {
   const [cards, setCards] = useState();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(<Loading title="Loading board"/>);
+  const [sortKey, setSortKey] = useState('');
 
   useEffect(() => {
     axios.get(`${baseURL}/boards/${id}?cards=details`).then((response) => {
@@ -47,20 +49,35 @@ const BoardPage = () => {
 			.post(`${baseURL}/boards/${id}/cards`, body)
 			.then((response) => {
 				const newCard = response.data.card;
-				setCards([...cards, newCard]);
+        const newCards = [...cards, newCard];
+        const sortedCards = sortKey ? sortCards(newCards, sortKey) : null;
+        setCards(sortedCards || newCards);
 			});
 	};
+
+  useEffect(() =>  {
+    if (sortKey) {
+      const sortedCards = sortCards(cards, sortKey);
+      setCards(sortedCards);
+    }
+  // eslint-disable-next-line
+  }, [sortKey]);
 
   const getBoardJsx = () => {
     return (
       <section className="board flex flex-col">
-        <article>
-          <BoardDetails board={board} handleUpdate={handleBoardUpdate} />
+        <article className="flex justify-between">
+          <div>
+            <BoardDetails board={board} handleUpdate={handleBoardUpdate} />
+          </div>
+          <SortSelect sortKey={sortKey} setSortKey={setSortKey} />
         </article>
         <div className="flex flex-wrap justify-center gap-8">
           <CardList
             cards={cards}
             setCards={setCards}
+            sortKey={sortKey}
+            sortCards={sortCards}
           />
           <NewCard handleCreate={handleCardCreate}/>
         </div>

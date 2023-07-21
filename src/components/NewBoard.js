@@ -9,7 +9,7 @@ const NewBoard = ({ handleCreate }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [owner, setOwner] = useState('')
-  const validInput =  title.trim() && title.trim() && title.trim();
+  const validInput =  title.trim() && description.trim() && owner.trim();
 
   const closeModal = () => {
     setIsOpen(false);
