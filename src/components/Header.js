@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import MenuDropdown from "./MenuDropDown";
+import MenuDropDown from "./MenuDropDown";
 import navigation from "../data/navigation";
 
 const Header = () => {
@@ -26,7 +26,7 @@ const Header = () => {
         </ul>
       </nav>
       <div className="flex justify-end gap-4">
-        <MenuDropdown />
+        <MenuDropDown />
       </div>
     </header>
   );

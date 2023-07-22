@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { Icon } from "@iconify/react";
 import navigation from "../data/navigation";
 
-export default function MenuDropdown() {
+export default function MenuDropDown() {
 	const navigate = useNavigate();
 	const menuItem = (key, icon, text, onclick) => (
 		<Menu.Item key={key}>
